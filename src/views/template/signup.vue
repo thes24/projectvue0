@@ -1,15 +1,4 @@
 <template>
-    <nav class="topnav">
-        <div class="left">
-            <a href="/">Home</a>
-            <a href="/board">Board</a>
-            <a href="/about">About</a>
-        </div>
-        <div class="right">
-            <a class="sign active" id="signup-btn" href="/signup">SignUp</a>
-            <a class="sign" id="login-btn" href="/login">Login</a>
-        </div>
-    </nav>
     <div class="sign-wrap">
         <div class="sign-label">SIGN UP</div>
         <div class="sign-form">

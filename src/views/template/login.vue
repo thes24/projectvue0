@@ -1,15 +1,4 @@
 <template>
-    <nav class="topnav">
-        <div class="left">
-            <a href="/">Home</a>
-            <a href="/board">Board</a>
-            <a href="/about">About</a>
-        </div>
-        <div class="right">
-            <a class="log" id="signup-btn" href="/signup">SignUp</a>
-            <a class="active log" id="login-btn" href="/login">Login</a>
-        </div>
-    </nav>
     <div class="log-wrap">
         <div class="log-label">LOG IN</div>
         <div class="log-form">
@@ -21,8 +10,8 @@
 </template>
 
 <script>
-import { myjs } from 'src/store/zcommon.js';
-import { swaxios } from 'src/store/zaxios.js';
+import { zaxios } from "@/store/zaxios.js";
+import { myjs } from "@/store/zcommon.js";
 
 export default {
     data() {
@@ -36,33 +25,33 @@ export default {
             myjs.loginCheck();
             myjs.loginRedirect();
 
-            swaxios.post('/api/member/login', {
+            zaxios.post("/api/member/login", {
                 memberEmail: this.memberEmail,
                 memberPassword: this.memberPassword,
             })
             .then(function (res) {
-                console.log('success', res);
+                console.log("success", res);
                 return res.data;
             })
             .then(function (data) {
-                console.log('data', data);
+                console.log("data", data);
                 this.handleLoginSuccess();
             })
             .catch(function (err) {
-                console.log('err', err);
-                alert('Incorrect Email or Password. Please try again.')
+                console.log("err", err);
+                alert("Incorrect Email or Password. Please try again.");
             });
         },
         handleLoginSuccess() {
             const ref = document.referrer;
 
-            if (ref.includes('/signup')) {
+            if (ref.includes("/signup")) {
                 this.$router.push('/');
             } else {
-                if ('referrer' in document) {
+                if ("referrer" in document) {
                     window.location = referrer;
                 } else {
-                    this.$router.push('/');
+                    this.$router.push("/");
                 }
             }
         }
@@ -74,6 +63,13 @@ export default {
         });
     },
     /*
+    The $ sign is a convention used for properties and methods that are part of the Vue instance.
+    For example, $data refers to the data object of the component, $props refers to the props object, and $emit is a method used for triggering custom events.
+
+    The $nextTick is a method provided by Vue.js that allows you to perform an action after the next DOM update cycle.
+    In other words, it allows you to wait until Vue has finished updating the DOM after a data change before executing a function.
+    This is useful when you want to perform operations on the DOM after it has been updated.
+
     Usage: The mounted hook is a method that you can define within your Vue component. When the component is mounted, this method will be called automatically.
     Purpose: It is commonly used for performing actions that require access to the component's DOM(Document Object Model) elements or for fetching data from external sources.
     */

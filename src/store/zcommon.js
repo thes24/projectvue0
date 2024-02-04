@@ -1,26 +1,26 @@
-const swaxios = require('./zaxios');
+import zaxios from './zaxios';
 
 const logout = () => {
-    swaxios.post('/api/member/logout')
-    .then(function (res) {
+    zaxios.post('/api/member/logout')
+    .then((res) => {
         console.log('success', res);
         return res.data;
     })
-    .then(function (data) {
+    .then((data) => {
         console.log('data', data);
         window.location.reload();
     })
-    .catch(function (err) {
+    .catch((err) => {
         console.error('err', err);
     });
 }
 
 function loginCheck() {
-    return swaxios.get('/api/member/check-login')
-    .then(res => {
+    return zaxios.get('/api/member/check-login')
+    .then((res) => {
         return res.data;
     })
-    .then(data => {
+    .then((data) => {
         if (data.memberId !== -1) {
             var navlog = document.getElementById('login-btn');
             navlog.textContent = 'LogOut';
@@ -32,18 +32,18 @@ function loginCheck() {
             navsign.href = '/mypage';
         }
     })
-    .catch(err => {
+    .catch((err) => {
         alert('예상치 못한 에러가 발생했습니다. 조금 뒤 다시 시도해 보시고, 계속 이 오류가 발생한다면, 안타까운겁니다.');
     }
 );
 }
 
 function loginRedirect() {
-    return swaxios.get('/api/member/check-login')
-    .then(res => {
+    return zaxios.get('/api/member/check-login')
+    .then((res) => {
         return res.data;
     })
-    .then(data => {
+    .then((data) => {
         if (data.memberId !== -1) {
             console.log('data', data);
             window.location.href = '/';
@@ -52,54 +52,54 @@ function loginRedirect() {
 }
 
 function getMemberName() {
-    return swaxios.get('/api/member/check-login')
-    .then(res => {
+    return zaxios.get('/api/member/check-login')
+    .then((res) => {
         return res.data;
     })
-    .then(data => {
+    .then((data) => {
         if (data.memberId !== -1) {
             console.log('data', data);
             return data.memberName;
         }
     })
-    .catch(err => {
+    .catch((err) => {
         console.error('Error fetching memberEmail:', err);
     });
 }
 
 function getMemberId() {
-    return swaxios.get('/api/member/check-login')
-    .then(res => {
+    return zaxios.get('/api/member/check-login')
+    .then((res) => {
         return res.data;
     })
-    .then(data => {
+    .then((data) => {
         if (data.memberId !== -1) {
             console.log('data', data);
             return data.memberId;
         }
     })
-    .catch(err => {
+    .catch((err) => {
         console.error('Error fetching memberId:', err);
     });
 }
 
 function getMemberEmail() {
-    return swaxios.get('/api/member/check-login')
-    .then(res => {
+    return zaxios.get('/api/member/check-login')
+    .then((res) => {
         return res.data;
     })
-    .then(data => {
+    .then((data) => {
         if (data.memberId !== -1) {
             console.log('data', data);
             return data.memberEmail;
         }
     })
-    .catch(err => {
+    .catch((err) => {
         console.error('Error fetching memberId:', err);
     });
 }
 
-module.exports = {
+export {
     loginCheck,
     loginRedirect,
     getMemberId,

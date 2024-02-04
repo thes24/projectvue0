@@ -1,17 +1,19 @@
-const axios = require('axios');
+import axios from 'axios';
 
-let swaxios = null;
+const createAxiosInstance = () => {
+    if (window.location.host === 'localhost:3000') {
+        return axios.create({
+            baseURL: 'http://localhost:8080',
+            withCredentials: true,
+        });
+    } else {
+        return axios.create({
+            baseURL: 'http://s.yeon-tae-woo.kro.kr',
+            withCredentials: true,
+        });
+    }
+};
 
-if (window.location.host == 'localhost:3000') {
-    swaxios = axios.create({
-        baseURL: 'http://localhost:8080',
-        withCredentials: true,
-    });
-} else {
-    swaxios = axios.create({
-        baseURL: 'http://s.yeon-tae-woo.kro.kr',
-        withCredentials: true,
-    });
-}
+const zaxios = createAxiosInstance();
 
-module.exports = swaxios;
+export default zaxios;
