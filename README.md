@@ -1,8 +1,7 @@
 # ProjectVue0
 
 ## Outline
-Ilta Teacher : Rn  
-Team Member : 문경태
+Ilta Teacher : Rn
 
 This is a summer project to improve my skill as a frontend programmer
 This is a Demo Project
