@@ -6,18 +6,18 @@
             <a href="/about">About</a>
         </div>
         <div class="right">
-            <a class="signlog active" id="signup-btn" href="/signup">SignUp</a>
-            <a class="signlog" id="login-btn" href="/login">Login</a>
+            <a class="sign active" id="signup-btn" href="/signup">SignUp</a>
+            <a class="sign" id="login-btn" href="/login">Login</a>
         </div>
     </nav>
-    <div class="signlog-wrap">
-        <div class="signlog-label">SIGN UP</div>
-        <div class="signlog-form">
+    <div class="sign-wrap">
+        <div class="sign-label">SIGN UP</div>
+        <div class="sign-form">
             <input v-model="memberEmail" type="text" id="member-email" placeholder="Email"> <br>
             <input v-model="memberPassword" type="password" id="member-password" placeholder="Password"> <br>
             <input v-model="memberPasswordCheck" type="password" id="member-password-check" placeholder="Confirm Password"> <br>
             <input v-model="memberName" type="text" id="member-name" placeholder="Name"> <br>
-            <button @click="signup" class="signlog-btn">SIGN UP</button>
+            <button @click="signup" class="sign-btn">SIGN UP</button>
         </div>
     </div>
 </template>
@@ -83,7 +83,7 @@ export default {
 </script>
 
 <style scoped>
-.signlog-wrap {
+.sign-wrap {
     margin-top: 100px;
     display: flex;
     align-items: center;
@@ -91,7 +91,7 @@ export default {
     height: 100%;
 }
 
-.signlog-label {
+.sign-label {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -110,7 +110,7 @@ export default {
     padding: 25px;
 }
 
-.signlog-form {
+.sign-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -125,7 +125,7 @@ export default {
     padding: 25px;
 }
 
-.signlog-form input {
+.sign-form input {
     color: whitesmoke;
     background-color: #646464;
     border: none;
@@ -134,16 +134,16 @@ export default {
     padding: 10px;
 }
 
-.signlog-form input:focus {
+.sign-form input:focus {
     border-color: #03c75b;
     outline: none;
 }
 
-.signlog-form input::placeholder {
+.sign-form input::placeholder {
     color: #03c75b;
 }
 
-.signlog-btn {
+.sign-btn {
     color: black;
     background-color: rgb(100, 100, 100);
     padding: .375rem .75rem;
@@ -152,7 +152,7 @@ export default {
     border-radius: 5px;
 }
 
-.signlog-btn:hover {
+.sign-btn:hover {
     background-color: #03c75b;
     font-weight: 900;
     cursor: pointer;
