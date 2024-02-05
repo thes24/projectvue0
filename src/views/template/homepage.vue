@@ -12,21 +12,29 @@
 </template>
 
 <script>
-import { zaxios } from "@/store/zaxios.js";
-import { myjs } from "@/store/zcommon.js";
+import { onMounted } from "vue";
+import zaxios from '@/js/zaxios';
+import myjs from '@/js/zcommon';
 
 export default {
-    mounted() {
-        this.loginCheck();
-    },
-    methods: {
-        loginCheck() {
-        // Call your login check logic from zcommon.js
-        // For simplicity, let's assume a method named loginCheck is available in zcommon.js
+    setup() {
+        const loginCheck = () => {
             myjs.loginCheck();
-        },
-    },
+        };
+        onMounted(() => {
+            loginCheck();
+        });
+        return {
+            loginCheck,
+        }
+    }
 };
+/*
+The setup function returns an object containing the properties and methods that you want to expose to the template.
+By returning these properties and methods from the setup function, you make them accessible in the template,
+and Vue will automatically handle their reactivity. The setup function is executed once during the component's setup phase,
+and the returned values persist throughout the component's lifecycle.
+ */
 </script>
 
 <style scoped>

@@ -99,7 +99,7 @@ function getMemberEmail() {
     });
 }
 
-export {
+export default {
     loginCheck,
     loginRedirect,
     getMemberId,

@@ -10,56 +10,60 @@
 </template>
 
 <script>
-import { zaxios } from "@/store/zaxios.js";
-import { myjs } from "@/store/zcommon.js";
+import { ref } from 'vue'
+import zaxios from '@/js/zaxios';
+import myjs from '@/js/zcommon';
 
 export default {
-    data() {
-        return {
-            memberEmail: '',
-            memberPassword: '',
-        }
-    },
-    methods: {
-        login() {
-            myjs.loginCheck();
-            myjs.loginRedirect();
+    setup() {
+        const memberEmail = ref('');
+        const memberPassword = ref('');
 
-            zaxios.post("/api/member/login", {
-                memberEmail: this.memberEmail,
-                memberPassword: this.memberPassword,
-            })
-            .then(function (res) {
-                console.log("success", res);
-                return res.data;
-            })
-            .then(function (data) {
-                console.log("data", data);
-                this.handleLoginSuccess();
-            })
-            .catch(function (err) {
-                console.log("err", err);
-                alert("Incorrect Email or Password. Please try again.");
+        const login = async () => {
+        myjs.loginCheck();
+        myjs.loginRedirect();
+
+        try {
+            const res = await zaxios.post('/api/member/login', {
+            memberEmail: memberEmail.value,
+            memberPassword: memberPassword.value,
             });
-        },
-        handleLoginSuccess() {
-            const ref = document.referrer;
 
-            if (ref.includes("/signup")) {
-                this.$router.push('/');
+            console.log('success', res);
+            const data = res.data;
+            console.log('data', data);
+            handleLoginSuccess();
+        } catch (err) {
+            console.log('err', err);
+            alert('Incorrect Email or Password. Please try again.');
+        }
+        };
+
+        const handleLoginSuccess = () => {
+        const ref = document.referrer;
+
+        if (ref.includes('/signup')) {
+            this.$router.replace('/');
+        } else {
+            if ('referrer' in document) {
+                window.location = referrer;
             } else {
-                if ("referrer" in document) {
-                    window.location = referrer;
-                } else {
-                    this.$router.push("/");
-                }
+                his.$router.push('/');
             }
         }
+        };
+
+        return {
+        memberEmail,
+        memberPassword,
+        login,
+        };
     },
+
     mounted() {
         this.$nextTick(() => {
-            myjs.loginCheck();
-            myjs.loginRedirect();
+        myjs.loginCheck();
+        myjs.loginRedirect();
         });
     },
     /*
@@ -72,8 +76,22 @@ export default {
 
     Usage: The mounted hook is a method that you can define within your Vue component. When the component is mounted, this method will be called automatically.
     Purpose: It is commonly used for performing actions that require access to the component's DOM(Document Object Model) elements or for fetching data from external sources.
+
+    Usage:
+    onMounted: Used in the Composition API, within the setup function.
+    mounted: Used in the Options API, outside of the setup function.
+    When They Are Called:
+
+    onMounted: The code inside onMounted runs when the component is mounted.
+        It's part of the Composition API and is placed inside the setup function, which is executed during the component setup phase.
+    mounted: The mounted hook in the Options API is called after the component has been mounted to the DOM.
+
+    Access to this Context:
+    onMounted: Since onMounted is part of the Composition API, it doesn't have access to this.
+        Instead, the variables and functions are directly accessible within the setup function's scope.
+    mounted: In the Options API, the mounted hook has access to the this context, allowing you to reference the component's instance.
     */
-}
+};
 
 </script>
 

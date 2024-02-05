@@ -12,63 +12,66 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+import zaxios from '@/js/zaxios';
+import myjs from '@/js/zcommon';
 
 export default {
-    data() {
-        return {
-            memberEmail: '',
-            memberPassword: '',
-            memberPasswordCheck: '',
-            memberName: '',
-        };
-    },
-    methods: {
-        async signup() {
-            if (memberEmail == '' || memberPassword == '' || memberPasswordCheck == '' || memberName == '') {
+    setup() {
+        const memberEmail = ref('');
+        const memberPassword = ref('');
+        const memberPasswordCheck = ref('');
+        const memberName = ref('');
+
+        const signup = async () => {
+            if (!memberEmail.value || !memberPassword.value || !memberPasswordCheck.value || !memberName.value) {
                 alert('Please fill in all required fields.');
                 return;
             }
-
-            if (memberPassword !== memberPasswordCheck) {
+            if (memberPassword.value !== memberPasswordCheck.value) {
                 alert('Passwords do not match. Please try again.');
                 return;
             }
 
             try {
-                const isEmailAvailable = await this.emailCheck(this.memberEmail);
-            } catch (err) {
+                const isEmailAvailable = await emailCheck(memberEmail.value);
+            } catch {
                 alert('Email already in use. Please choose a different email.');
+                return;
             }
 
-            swaxios.post('api/member/signup', {
-                memberEmail: this.memberEmail,
-                memberPassword: this.memberPassword,
-                memberName: this.memberName,
-            })
-            .then((res) => {
-                console.log('Sign Up Success', res);
-                return res.data;
-            })
-            .then((data) => {
-                console.log('data', data);
-                this.$router.push('/login');
-            })
-            .catch((err) => {
-                console.log('error', err);
-            });
-        },
-        async emailCheck(email) {
             try {
-                return swaxios.post('api/member/check-email', { memberEmail : email })
-                .then(res => {
-                    return res.status == 200;
+                const res = await zaxios.post('api/member/signup', {
+                    memberEmail: memberEmail.value,
+                    memberPassword: memberPassword.value,
+                    memberName: memberName.value,
                 })
+                console.log('Sign Up Success', res.data);
+                this.$router.push('/login');
             } catch (err) {
-                alert('Email already in use. emailCheck()');
+                console.error('Sign Up Error', err);
             }
-        }
+        };
+
+        const emailCheck = async (email) => {
+            try {
+                const response = await zaxios.post('api/member/check-email', { memberEmail: email });
+                return response.status === 200;
+            } catch (err) {
+                const response = await zaxios.post('api/member/check-email', { memberEmail: email });
+                return response.status === 200;
+            }
+        };
+
+        return {
+            memberEmail,
+            memberPassword,
+            memberPasswordCheck,
+            memberName,
+            signup,
+        };
     },
-}
+};
 </script>
 
 <style scoped>

@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import { zaxios } from "@/store/zaxios.js";
-import { myjs } from "@/store/zcommon.js";
+import zaxios from '@/js/zaxios';
+import myjs from '@/js/zcommon';
 
 export default {
     props: {
