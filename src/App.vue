@@ -22,17 +22,17 @@ export default {
   },
   setup() {
     const isLoggedIn = ref(false);
-    const userId = ref('123');
-    const userName = ref('John');
+    const memberId = ref('123');
+    const memberName = ref('John');
 
     const isVuePage = computed(() => {
-      return import.meta.env.BASE_URL;
+      return window.location.pathname.startsWith('/vue/');
     });
 
     return {
       isLoggedIn,
-      userId,
-      userName,
+      memberId,
+      memberName,
       isVuePage,
     };
   },

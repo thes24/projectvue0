@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { onMounted } from "vue";
+import { onMounted } from 'vue';
 import zaxios from '@/js/zaxios';
 import myjs from '@/js/zcommon';
 
@@ -21,9 +21,7 @@ export default {
         const loginCheck = () => {
             myjs.loginCheck();
         };
-        onMounted(() => {
-            loginCheck();
-        });
+        onMounted(loginCheck);
         return {
             loginCheck,
         }
